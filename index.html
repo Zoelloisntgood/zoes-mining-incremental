@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <title>zoes mining incremental</title>
+        <style>
+            body {
+    background-color: 101010;
+    font-family:monospace;
+    color: #ffffff;
+    font-size: 200%;
+    text-align: center;
+}
+        </style>
+    </head>
+    <body>
+        <script>
+            var damage = 1;
+            var stone = 0;
+            var stoneHP = 5;
+
+            function stoned() {
+                stoneHP -= 1;
+                if (stoneHP <= 0) {
+                    stoneHP = 5;
+                    stone += 1;
+                }
+            }
+
+            setInterval(function() {
+                document.getElementById("damage").innerHTML = damage;
+                document.getElementById("stone").innerHTML = stone;
+                document.getElementById("stoneHP").innerHTML = stoneHP;
+            },10);
+        </script>
+        <h1>Damage: <span id="damage"></span></h1>
+        <br>
+        <br>
+        <button onclick="stoned()" style="background-color: #101010; border-style: none;">
+            <img src="stone.png" width="150px" height="150px">
+        </button>
+        <h2 style="color: #ff0000;">HP: <span id="stoneHP"></span>/5</h2>
+        <h1 style="color: #555555;">Stone: <span id="stone"></span>g</h1>
+    </body>
+</html>
