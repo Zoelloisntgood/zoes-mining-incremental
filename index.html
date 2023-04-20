@@ -19,9 +19,12 @@
             var money = 0;
             var tstone = 0;
             var tstoneHP = 25;
+            var nmoney = 0;
+            var ttstone = 0;
+            var ttstoneHP = 100;
 
             function stoned() {
-                stoneHP -= 1;
+                stoneHP -= damage;
                 if (stoneHP <= 0) {
                     stoneHP = 5;
                     stone += 1;
@@ -29,10 +32,23 @@
             }
 
             function tstoned() {
-                tstoneHP -= 1;
+                tstoneHP -= damage;
                 if (tstoneHP <= 0) {
                     tstoneHP = 25;
                     tstone += 1;
+                }
+            }
+            function stoneu() {
+                if (money >= 25) {
+                    nmoney += 25;
+                    damage += 1;
+                }
+            }
+            function ttstoned() {
+                ttstoneHP -= damage;
+                if (ttstoneHP <= 0) {
+                    ttstoneHP = 100;
+                    ttstone += 1;
                 }
             }
 
@@ -40,10 +56,13 @@
                 document.getElementById("damage").innerHTML = damage;
                 document.getElementById("stone").innerHTML = stone;
                 document.getElementById("stoneHP").innerHTML = stoneHP;
-                money = stone + (10 * tstone);
+                money = stone + (10 * tstone) - nmoney;
                 document.getElementById("money").innerHTML = money;
                 document.getElementById("tstone").innerHTML = tstone;
                 document.getElementById("tstoneHP").innerHTML = tstoneHP;
+                document.getElementById("nmoney").innerHTML = nmoney;
+                document.getElementById("ttstone").innerHTML = ttstone;
+                document.getElementById("ttstoneHP").innerHTML = ttstoneHP;
             },10);
             function saveGame() {
                     var gameSave = {
@@ -51,7 +70,10 @@
                         stone: stone,
                         stoneHP: stoneHP,
                         tstone: tstone,
-                        tstoneHP: tstoneHP
+                        tstoneHP: tstoneHP,
+                        nmoney: nmoney,
+                        ttstone: ttstone,
+                        ttstoneHP: ttstoneHP
                     };
                     localStorage.setItem("gameSave", JSON.stringify(gameSave));
             }
@@ -62,6 +84,9 @@
                     if (typeof savedGame.stoneHP !== "undefined") stoneHP = savedGame.stoneHP;
                     if (typeof savedGame.tstone !== "undefined") tstone = savedGame.tstone;
                     if (typeof savedGame.tstoneHP !== "undefined") tstoneHP = savedGame.tstoneHP;
+                    if (typeof savedGame.nmoney !== "undefined") nmoney = savedGame.nmoney;
+                    if (typeof savedGame.ttstone !== "undefined") ttstone = savedGame.ttstone;
+                    if (typeof savedGame.ttstoneHP !== "undefined") ttstoneHP = savedGame.ttstoneHP;
             }
             window.onload = function() {
                     loadGame();
@@ -77,8 +102,11 @@
         <button onclick="stoned()" style="background-color: #101010; border-style: none;">
             <img src="stone.png" width="150px" height="150px">
         </button>
-        <h2 style="color: #ff0000;">HP: <span id="stoneHP"></span>/5</h2>
-        <h1 style="color: #555555;">Stone: <span id="stone"></span>g</h1>
+        <button onclick="stoneu()" style="background-color: #101010; border-style: none;">
+            <img src="stoneu.png" width="150px" height="150px" xposition="250px">
+        </button>
+        <p style="color: #ff0000; font-size: 40px;"><b><span id="stoneHP"></span>/5⠀⠀<color style="color: #00ff00; font-size: 40px;">Cost: $25</color></b></p><p style="color: #101010; font-size: 1px;"><span id="nmoney"></span></p>
+        <h1 style="color: #555555;">Stone: <span id="stone"></span>g</h1>    
         <br>
         <br>
         <button onclick="tstoned()" style="background-color: #101010; border-style: none;">
@@ -86,5 +114,10 @@
         </button>
         <h2 style="color: #ff0000;">HP: <span id="tstoneHP"></span>/25</h2>
         <h1 style="color: #333333;">Tough Stone: <span id="tstone"></span>g</h1>
+        <button onclick="ttstoned()" style="background-color: #101010; border-style: none;">
+            <img src="ttstone.png" width="150px" height="150px">
+        </button>
+        <h2 style="color: #ff0000;">HP: <span id="ttstoneHP"></span>/100</h2>
+        <h1 style="color: #000000;">Coal: <span id="ttstone"></span>g</h1>
     </body>
 </html>
